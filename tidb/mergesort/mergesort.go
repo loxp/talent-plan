@@ -8,6 +8,30 @@ func MergeSort(src []int64) {
 }
 
 func mergeSort(data []int64) []int64 {
+	return mergeSortAdapted(data)
+}
+
+func mergeSortAdapted(data []int64) []int64 {
+	if len(data) < 1024 {
+		return mergeSortSerialized(data)
+	} else {
+		return mergeSortParalleled(data)
+	}
+}
+
+func mergeSortSerialized(data []int64) []int64 {
+	if len(data) <= 1 {
+		return data
+	}
+	middle := len(data) / 2
+
+	left := mergeSortSerialized(data[:middle])
+	right := mergeSortSerialized(data[middle:])
+
+	return merge(left, right)
+}
+
+func mergeSortParalleled(data []int64) []int64 {
 	if len(data) <= 1 {
 		return data
 	}
@@ -16,10 +40,10 @@ func mergeSort(data []int64) []int64 {
 	leftChan := make(chan []int64)
 	rightChan := make(chan []int64)
 	go func() {
-		leftChan <- mergeSort(data[:middle])
+		leftChan <- mergeSortAdapted(data[:middle])
 	}()
 	go func() {
-		rightChan <- mergeSort(data[middle:])
+		rightChan <- mergeSortAdapted(data[middle:])
 	}()
 
 	return merge(<-leftChan, <-rightChan)
