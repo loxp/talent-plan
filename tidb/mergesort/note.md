@@ -115,7 +115,11 @@ pprof: .pprof/20200302_135153
 
 ![cpu_adapted_1024](assets/mergesort_flamegraph_cpu_adapted_1024.png)
 
-现在, 内存分配和GC占据了较大的CPU耗时比重, 能否减少内存分配次数?
+### 一些问题
+
+现在, 内存分配和GC占据了较大的CPU耗时比重, 能否减少内存分配次数? 可以采用sync.Pool实现一个Slice对象池.
+
+另外, 递归的方式不适合搞goroutine池子进行处理.
 
 ## 测试环境
 本机, MacBook Pro 2019, 6核i7, 32G内存
