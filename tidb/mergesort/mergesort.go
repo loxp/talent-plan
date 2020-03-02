@@ -11,6 +11,7 @@ func mergeSort(data []int64) []int64 {
 	return mergeSortAdapted(data)
 }
 
+// 只在分段长度大于1024时才使用并行排序, 否则使用串行排序
 func mergeSortAdapted(data []int64) []int64 {
 	if len(data) < 1024 {
 		return mergeSortSerialized(data)
@@ -19,6 +20,7 @@ func mergeSortAdapted(data []int64) []int64 {
 	}
 }
 
+// 单goroutine归并排序
 func mergeSortSerialized(data []int64) []int64 {
 	if len(data) <= 1 {
 		return data
@@ -31,6 +33,7 @@ func mergeSortSerialized(data []int64) []int64 {
 	return merge(left, right)
 }
 
+// 启动多个goroutine并行归并排序
 func mergeSortParalleled(data []int64) []int64 {
 	if len(data) <= 1 {
 		return data
