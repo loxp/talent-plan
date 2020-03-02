@@ -87,7 +87,7 @@ BenchmarkNormalSort-12    	       1	3445930557 ns/op	   41024 B/op	       7 allo
 
 通过CPU火焰图可以看到, 大量CPU时间花费在了chan的发送和接收的等待上面.
 
-[cpu_paralleled](assets/mergesort_flamegraph_cpu_all_paralleled.png)
+![cpu_paralleled](assets/mergesort_flamegraph_cpu_all_paralleled.png)
 
 之所以这样, 是因为开启了过多的goroutine进行通道等待, 实际计算用到的goroutine其实并不多.
 
@@ -113,7 +113,7 @@ pprof: .pprof/20200302_135153
 
 可以看到, 时间已经缩短至NormalSort的1/4左右了. 再看一下CPU火焰图:
 
-[cpu_adapted_1024](assets/mergesort_flamegraph_cpu_adapted_1024.png)
+![cpu_adapted_1024](assets/mergesort_flamegraph_cpu_adapted_1024.png)
 
 现在, 内存分配和GC占据了较大的CPU耗时比重, 能否减少内存分配次数?
 
