@@ -40,7 +40,7 @@ BenchmarkNormalSort-12    	       1	3213671140 ns/op	   32832 B/op	       6 allo
 
 CPU火焰图:
 
-[cpu_single](assets/mergesort_flamegraph_cpu_single.png)
+![cpu_single](assets/mergesort_flamegraph_cpu_single.png)
 
 ## 实现2
 使用不限制数量的goroutine递归调用mergeSort, 通过阻塞式chan返回结果, 再进行merge.
