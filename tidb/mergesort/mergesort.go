@@ -13,10 +13,16 @@ func mergeSort(data []int64) []int64 {
 	}
 	middle := len(data) / 2
 
-	left := mergeSort(data[:middle])
-	right := mergeSort(data[middle:])
+	leftChan := make(chan []int64)
+	rightChan := make(chan []int64)
+	go func() {
+		leftChan <- mergeSort(data[:middle])
+	}()
+	go func() {
+		rightChan <- mergeSort(data[middle:])
+	}()
 
-	return merge(left, right)
+	return merge(<-leftChan, <-rightChan)
 }
 
 func merge(left, right []int64) []int64 {
